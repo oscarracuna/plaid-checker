@@ -11,6 +11,7 @@ import (
 
 	"strings"
 
+	"github.com/joho/godotenv"
 	"github.com/plaid/plaid-go/v25/plaid"
 )
 
@@ -28,6 +29,7 @@ var (
 
 func main() {
 
+	godotenv.Load()
 	saludo := `
 
  ______   _        ______  _____  _____  
@@ -76,9 +78,11 @@ prompt:
 
 	// This is the key and secret, please do not hack me
 
-	configuration.AddDefaultHeader("PLAID-CLIENT-ID", os.Getenv("PLAID_CLIENT_ID"))
+	client_id := os.Getenv("PLAID_CLIENT_ID")
+	secret := os.Getenv("PLAID_SECRET")
+	configuration.AddDefaultHeader("PLAID-CLIENT-ID", client_id)
 
-	configuration.AddDefaultHeader("PLAID-SECRET", os.Getenv("PLAID_SECRET"))
+	configuration.AddDefaultHeader("PLAID-SECRET", secret)
 
 	// This states that we're using sandbox, so we're not messing with programmer's API
 
